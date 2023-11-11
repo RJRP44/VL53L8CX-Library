@@ -1,0 +1,5 @@
+version: "1.0.0"
+description: "VL53L8CX visualize xtalk data example"
+dependencies:
+  rjrp44/vl53l8cx:
+    version : "~1.0.0"

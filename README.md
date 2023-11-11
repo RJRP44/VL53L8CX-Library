@@ -54,7 +54,7 @@ idf.py add-dependency "rjrp44/vl53l8cx^0.1.0"
 
 ## Examples 📄
 
-You can find in `📁 ./examples` ST's examples adapted for ESP32 with I²C.
+You can find in `📁 ./examples` ST's examples adapted for ESP32 with I²C. For more information about the available features read [UM3109](https://www.st.com/resource/en/user_manual/um3109-a-guide-for-using-the-vl53l8cx-lowpower-highperformance-timeofflight-multizone-ranging-sensor-stmicroelectronics.pdf).
 
 ## Usual errors 🐛
 ### Stack overflow error 💽
@@ -65,7 +65,7 @@ If by running an example you get a stack overflow error, this means that your ma
 ```
 **Increase the main stack size :**
 
-Run `idf.py menuconfig`. Go to Component Config -> ESP System settings and increase the Main task stack size.
+Run `idf.py menuconfig`. Go to Component Config -> ESP System settings and increase the Main task stack size to at least `7168`.
 
 ## 📝 License
 

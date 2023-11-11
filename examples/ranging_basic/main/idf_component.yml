@@ -2,4 +2,4 @@ version: "1.0.1"
 description: "VL53L8CX basic ranging example"
 dependencies:
   rjrp44/vl53l8cx:
-    version : "~0.1.0"
+    version : "~1.0.0"
