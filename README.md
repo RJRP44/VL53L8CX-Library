@@ -1,9 +1,4 @@
-<h1 style="text-align: center;"> VL53L8CX library for ESP32  </h1>
-<p style="text-align: center;">
-<img src="https://seeklogo.com/images/E/espressif-systems-logo-1350B9E771-seeklogo.com.png" alt="Espressif logo" width="40">
-&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-<img src="https://upload.wikimedia.org/wikipedia/fr/e/e0/STMicroelectronics_%28logo-2020%29.svg" alt="ST logo" width="160">
-</p>
+# VL53L8CX library for ESP32
 
 A vl53l5cx library for esp32 using the **esp-idf framework**. This library is based
 on [ST's  Ultra Lite Driver (ULD) for VL53L8CX](https://www.st.com/content/st_com/en/products/embedded-software/imaging-software/stsw-img040.html)
@@ -14,16 +9,16 @@ on [ST's  Ultra Lite Driver (ULD) for VL53L8CX](https://www.st.com/content/st_co
 
 ## Contents 📌
 
-* [Installation](#installation-)
+* [Getting started](#Getting-started)
   * [Wiring for the SATEL-VL53L8](#wiring-for-the-satel-VL53L8)
-  * [Library Installation](#library-installation)
+  * [Library Installation](#library-installation-)
 * [Examples](#examples-)
 * [Usual Errors](#usual-errors-)
   * [Stack overflow error](#stack-overflow-error-)
 
 ---
 
-## Installation 📥
+## Getting started
 ### Wiring for the SATEL-VL53L8
 
 For the examples this is the used wiring, but feel free to modify it and adapt it for your needs.
@@ -45,25 +40,17 @@ For the examples this is the used wiring, but feel free to modify it and adapt i
 | GND               | GND                                           |
 
 
-### Library Installation
+### Library Installation 📥
 
-You can now use the [IDF Component Manager](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/tools/idf-component-manager.html) to easily import this library into your project ! If you have not already done so, create a file named `idf_component.yml` in your `📁 ./main` folder. Now just add the library to it :
-```yaml
-dependencies:
-  
-  #V53L8CX-Library
-  vl53l8cx:
-    git: https://github.com/RJRP44/V53L8CX-Library.git
+The library is available at https://components.espressif.com/components/rjrp44/vl53l8cx.
 
-```
-
-You can now reload your cmake project, and you should see it in the cmake log and in the `📁 ./managed_components` folder.
+So, you can use the [IDF Component Manager](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/tools/idf-component-manager.html) to easily import this library into your project.
+To add this component to your project, run:
 
 ```log
-Processing 2 dependencies:
-[1/2] idf (5.0.0)
-[2/2] vl53l8cx
+idf.py add-dependency "rjrp44/vl53l8cx^0.1.0" 
 ```
+
 
 ## Examples 📄
 
