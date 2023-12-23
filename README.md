@@ -2,7 +2,7 @@
 
 A vl53l5cx library for esp32 using the **esp-idf framework**. This library is based
 on [ST's  Ultra Lite Driver (ULD) for VL53L8CX](https://www.st.com/content/st_com/en/products/embedded-software/imaging-software/stsw-img040.html)
-. This library is just an adaptation of the ST's library for esp-32.
+v.1.2.0. This library is just an adaptation of the ST's library for esp-32.
 
 > **Warning**
 > This Library is **not** compatible with Arduino framework
@@ -48,7 +48,7 @@ So, you can use the [IDF Component Manager](https://docs.espressif.com/projects/
 To add this component to your project, run:
 
 ```log
-idf.py add-dependency "rjrp44/vl53l8cx^0.1.0" 
+idf.py add-dependency "rjrp44/vl53l8cx^1.1.0" 
 ```
 
 

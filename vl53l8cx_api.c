@@ -364,11 +364,10 @@ uint8_t vl53l8cx_init(
 			p_dev->temp_buffer, 4);
 	SwapBuffer(p_dev->temp_buffer, 4);
 	memcpy((uint8_t*)&crc_checksum, &(p_dev->temp_buffer[0]), 4);
-	if (crc_checksum != (uint32_t)0xee922b77)
+	if (crc_checksum != (uint32_t)0x28c6adac)
 	{
 		status |= VL53L8CX_STATUS_FW_CHECKSUM_FAIL;
 	}
-	//crc_checksum = *((uint32_t *)&p_dev->temp_buffer[0]);
 
 	/* Get offset NVM data and store them into the offset buffer */
 	status |= WrMulti(&(p_dev->platform), 0x2fd8,
@@ -439,7 +438,15 @@ uint8_t vl53l8cx_get_power_mode(
 			*p_power_mode = VL53L8CX_POWER_MODE_WAKEUP;
 			break;
 		case 0x2:
-			*p_power_mode = VL53L8CX_POWER_MODE_SLEEP;
+			status |= RdByte(&(p_dev->platform), 0x000F, &tmp);
+			if(tmp == 0x43)
+			{
+				*p_power_mode = VL53L8CX_POWER_MODE_DEEP_SLEEP;
+			}
+			else
+			{
+				*p_power_mode = VL53L8CX_POWER_MODE_SLEEP;
+			}
 
 			break;
 		default:
@@ -457,7 +464,7 @@ uint8_t vl53l8cx_set_power_mode(
 		VL53L8CX_Configuration		*p_dev,
 		uint8_t			        power_mode)
 {
-	uint8_t current_power_mode, status = VL53L8CX_STATUS_OK;
+	uint8_t current_power_mode, stored_mode, status = VL53L8CX_STATUS_OK;
 
 	status |= vl53l8cx_get_power_mode(p_dev, &current_power_mode);
 	if(power_mode != current_power_mode)
@@ -467,8 +474,17 @@ uint8_t vl53l8cx_set_power_mode(
 		case VL53L8CX_POWER_MODE_WAKEUP:
 			status |= WrByte(&(p_dev->platform), 0x7FFF, 0x00);
 			status |= WrByte(&(p_dev->platform), 0x09, 0x04);
+			status |= RdByte(&(p_dev->platform), 0x000F, &stored_mode);
+			if(stored_mode == 0x43) /* Only for deep sleep mode */
+			{
+				status |= WrByte(&(p_dev->platform), 0x000F, 0x40);
+			}
 			status |= _vl53l8cx_poll_for_answer(
 						p_dev, 1, 0, 0x06, 0x01, 1);
+			if(stored_mode == 0x43) /* Only for deep sleep mode */
+			{
+				status |= vl53l8cx_init(p_dev);
+			}
 			break;
 
 		case VL53L8CX_POWER_MODE_SLEEP:
@@ -476,6 +492,14 @@ uint8_t vl53l8cx_set_power_mode(
 			status |= WrByte(&(p_dev->platform), 0x09, 0x02);
 			status |= _vl53l8cx_poll_for_answer(
 						p_dev, 1, 0, 0x06, 0x01, 0);
+			break;
+
+		case VL53L8CX_POWER_MODE_DEEP_SLEEP:
+			status |= WrByte(&(p_dev->platform), 0x7FFF, 0x00);
+			status |= WrByte(&(p_dev->platform), 0x09, 0x02);
+			status |= _vl53l8cx_poll_for_answer(
+					p_dev, 1, 0, 0x06, 0x01, 0);
+			status |= WrByte(&(p_dev->platform), 0x000F, 0x43);
 			break;
 
 		default:

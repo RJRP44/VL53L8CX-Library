@@ -18,7 +18,7 @@ uint8_t RdByte(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t *
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
 
-    //St25 Read sequence :
+    //Read byte sequence :
     i2c_master_write_byte(cmd, (p_platform->address) | I2C_MASTER_WRITE, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, RegisterAdress >> 8, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, RegisterAdress & 0xFF, ACK_CHECK_EN);
@@ -57,7 +57,7 @@ uint8_t WrMulti(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t 
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
 
-    //St25 Write sequence :
+    //Write sequence :
     i2c_master_write_byte(cmd, (p_platform->address) | I2C_MASTER_WRITE, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, RegisterAdress >> 8, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, RegisterAdress & 0xFF, ACK_CHECK_EN);
@@ -75,7 +75,7 @@ uint8_t RdMulti(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t 
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
 
-    //St25 Read sequence :
+    //Read sequence :
     i2c_master_write_byte(cmd, (p_platform->address) | I2C_MASTER_WRITE, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, RegisterAdress >> 8, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, RegisterAdress & 0xFF, ACK_CHECK_EN);

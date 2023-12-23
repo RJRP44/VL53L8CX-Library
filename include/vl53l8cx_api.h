@@ -25,7 +25,7 @@
  * @brief Current driver version.
  */
 
-#define VL53L8CX_API_REVISION			"VL53L8CX_1.1.0"
+#define VL53L8CX_API_REVISION			"VL53L8CX_1.2.0"
 
 /**
  * @brief Default I2C address of VL53L8CX sensor. Can be changed using function
@@ -63,14 +63,20 @@
 #define VL53L8CX_RANGING_MODE_AUTONOMOUS	((uint8_t) 3U)
 
 /**
- * @brief The default power mode is VL53L8CX_POWER_MODE_WAKEUP. User can choose
- * the mode VL53L8CX_POWER_MODE_SLEEP to save power consumption is the device
- * is not used. The low power mode retains the firmware and the configuration.
+ * @brief The default power mode is VL53L8CX_POWER_MODE_WAKEUP. User can choose two
+ * different modes to save power consumption when is the device
+ * is not used:
+ * - VL53L8CX_POWER_MODE_SLEEP: This mode retains the firmware and the configuration. It
+ * is recommended when the device needs to quickly wake-up.
+ * - VL53L8CX_POWER_MODE_DEEP_SLEEP: This mode clears all memory, by consequence the firmware,
+ * the configuration and the calibration are lost. It is recommended when the device sleeps during
+ * a long time as it consumes a very low current consumption.
  * Both modes can be changed using function vl53l8cx_set_power_mode().
  */
 
 #define VL53L8CX_POWER_MODE_SLEEP		((uint8_t) 0U)
 #define VL53L8CX_POWER_MODE_WAKEUP		((uint8_t) 1U)
+#define VL53L8CX_POWER_MODE_DEEP_SLEEP	((uint8_t) 2U)
 
 /**
  * @brief Macro VL53L8CX_STATUS_OK indicates that VL53L5 sensor has no error.
