@@ -25,7 +25,7 @@
  * @brief Current driver version.
  */
 
-#define VL53L8CX_API_REVISION			"VL53L8CX_1.2.0"
+#define VL53L8CX_API_REVISION			"VL53L8CX_1.2.1"
 
 /**
  * @brief Default I2C address of VL53L8CX sensor. Can be changed using function
@@ -166,6 +166,7 @@
 #define VL53L8CX_DCI_FW_NB_TARGET		((uint16_t)0x5478)
 #define VL53L8CX_DCI_RANGING_MODE		((uint16_t)0xAD30U)
 #define VL53L8CX_DCI_DSS_CONFIG			((uint16_t)0xAD38U)
+#define VL53L8CX_DCI_VHV_CONFIG			((uint16_t)0xAD60U)
 #define VL53L8CX_DCI_TARGET_ORDER		((uint16_t)0xAE64U)
 #define VL53L8CX_DCI_SHARPENER			((uint16_t)0xAED8U)
 #define VL53L8CX_DCI_INTERNAL_CP		((uint16_t)0xB39CU)
@@ -667,8 +668,29 @@ uint8_t vl53l8cx_set_external_sync_pin_enable(
 		VL53L8CX_Configuration		*p_dev,
 		uint8_t				enable_sync_pin);
 
+/**
+ * @brief This function is used to get the number of frames between 2 temperature
+ * compensation.
+ * @param (VL53L8CX_Configuration) *p_dev : VL53L8CX configuration structure.
+ * @param (uint32_t) *p_repeat_count : Number of frames before next temperature
+ * compensation. Set to 0 to disable the feature (default configuration).
+ */
+uint8_t vl53l8cx_get_VHV_repeat_count(
+		VL53L8CX_Configuration *p_dev,
+		uint32_t *p_repeat_count);
 
-
+/**
+ * @brief This function is used to set a periodic temperature compensation. By
+ * setting a repeat count different to 0 the firmware automatically runs a
+ * temperature calibration every N frames.
+ * default the repeat count is set to 0
+ * @param (VL53L8CX_Configuration) *p_dev : VL53L8CX configuration structure.
+ * @param (uint32_t) repeat_count : Number of frames between temperature
+ * compensation. Set to 0 to disable the feature (default configuration).
+ */
+uint8_t vl53l8cx_set_VHV_repeat_count(
+		VL53L8CX_Configuration *p_dev,
+		uint32_t repeat_count);
 
 /**
  * @brief This function can be used to read 'extra data' from DCI. Using a known
