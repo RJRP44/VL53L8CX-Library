@@ -23,21 +23,21 @@ v.1.2.1. This library is just an adaptation of the ST's library for esp-32.
 
 For the examples this is the used wiring, but feel free to modify it and adapt it for your needs.
 
-| SATEL-VL53L8 Pins | ESP32S3 Pins                                  |           
-|-------------------|-----------------------------------------------|
-| 5v                | 5v                                            |
-| 1v8               | NC                                            |
-| 3v3               | NC                                            |
-| IOVDD             | NC                                            |
-| PWREN             | 5V                                            |
-| MCLK_SCL          | GPIO2, 2.2 kΩ pullup resistor required to 3v3 |
-| MOSI_SDA          | GPIO1, 2.2 kΩ pullup resistor required to 3v3 |
-| MISO              | NC                                            |
-| NCS               | 3v3                                           |       
-| SPI_I2C_N         | GND                                           |
-| GPIO1             | NC                                            |
-| GPIO2             | NC                                            |
-| GND               | GND                                           |
+| SATEL-VL53L8 Pins | ESP32S3 Pins                                                                                                                     |           
+|-------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| 5v                | 5v                                                                                                                               |
+| 1v8               | NC                                                                                                                               |
+| 3v3               | NC                                                                                                                               |
+| IOVDD             | NC                                                                                                                               |
+| PWREN             | GPIO4, 10 kΩ pullup resistor required to 3v3 if you want to use the `Reset_Sensor()` function, otherwise connect it to 3v3 or 5v |
+| MCLK_SCL          | GPIO2, 2.2 kΩ pullup resistor required to 3v3                                                                                    |
+| MOSI_SDA          | GPIO1, 2.2 kΩ pullup resistor required to 3v3                                                                                    |
+| MISO              | NC                                                                                                                               |
+| NCS               | 3v3                                                                                                                              |       
+| SPI_I2C_N         | GND                                                                                                                              |
+| GPIO1             | NC                                                                                                                               |
+| GPIO2             | NC                                                                                                                               |
+| GND               | GND                                                                                                                              |
 
 
 ### Library Installation 📥

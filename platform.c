@@ -18,7 +18,7 @@ uint8_t RdByte(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t *
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
 
-    //Read byte sequence :
+    //St25 Read sequence :
     i2c_master_write_byte(cmd, (p_platform->address) | I2C_MASTER_WRITE, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, RegisterAdress >> 8, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, RegisterAdress & 0xFF, ACK_CHECK_EN);
@@ -57,7 +57,7 @@ uint8_t WrMulti(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t 
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
 
-    //Write sequence :
+    //St25 Write sequence :
     i2c_master_write_byte(cmd, (p_platform->address) | I2C_MASTER_WRITE, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, RegisterAdress >> 8, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, RegisterAdress & 0xFF, ACK_CHECK_EN);
@@ -75,7 +75,7 @@ uint8_t RdMulti(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t 
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
 
-    //Read sequence :
+    //St25 Read sequence :
     i2c_master_write_byte(cmd, (p_platform->address) | I2C_MASTER_WRITE, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, RegisterAdress >> 8, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, RegisterAdress & 0xFF, ACK_CHECK_EN);
@@ -93,24 +93,17 @@ uint8_t RdMulti(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t 
     return ret;
 }
 
-uint8_t Reset_Sensor(VL53L8CX_Platform *p_platform) {
-    uint8_t status = 0;
+uint8_t Reset_Sensor(VL53L8CX_Platform* p_platform)
+{
+    gpio_set_direction(p_platform->reset_gpio, GPIO_MODE_OUTPUT);
 
-    /* (Optional) Need to be implemented by customer. This function returns 0 if OK */
-
-    /* Set pin LPN to LOW */
-    /* Set pin AVDD to LOW */
-    /* Set pin VDDIO  to LOW */
-    /* Set pin CORE_1V8 to LOW */
+    gpio_set_level(p_platform->reset_gpio, 0);
     WaitMs(p_platform, 100);
 
-    /* Set pin LPN to HIGH */
-    /* Set pin AVDD to HIGH */
-    /* Set pin VDDIO to HIGH */
-    /* Set pin CORE_1V8 to HIGH */
+    gpio_set_level(p_platform->reset_gpio, 1);
     WaitMs(p_platform, 100);
 
-    return status;
+    return ESP_OK;
 }
 
 void SwapBuffer(uint8_t *buffer, uint16_t size) {

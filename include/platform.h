@@ -33,6 +33,7 @@ typedef struct
 {
     uint16_t address;
     i2c_port_t port;
+    gpio_num_t reset_gpio;
 
 } VL53L8CX_Platform;
 

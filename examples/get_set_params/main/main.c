@@ -114,8 +114,9 @@ void app_main(void)
 	Dev.platform.address = VL53L8CX_DEFAULT_I2C_ADDRESS;
     Dev.platform.port = i2c_port;
 
-	/* (Optional) Reset sensor toggling PINs (see platform, not in API) */
-	//Reset_Sensor(&(Dev.platform));
+	/* (Optional) Reset sensor */
+    Dev.platform.reset_gpio = GPIO_NUM_5;
+    Reset_Sensor(&(Dev.platform));
 
 	/* (Optional) Set a new I2C address if the wanted address is different
 	* from the default one (filled with 0x20 for this example).
