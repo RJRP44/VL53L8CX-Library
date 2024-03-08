@@ -32,7 +32,7 @@ For the examples this is the used wiring, but feel free to modify it and adapt i
 | 1v8               | NC                                                                                                                               |
 | 3v3               | NC                                                                                                                               |
 | IOVDD             | NC                                                                                                                               |
-| PWREN             | GPIO4, 10 kΩ pullup resistor required to 3v3 if you want to use the `Reset_Sensor()` function, otherwise connect it to 3v3 or 5v |
+| PWREN             | GPIO5, 10 kΩ pullup resistor required to 3v3 if you want to use the `Reset_Sensor()` function, otherwise connect it to 3v3 or 5v |
 | MCLK_SCL          | GPIO2, 2.2 kΩ pullup resistor required to 3v3                                                                                    |
 | MOSI_SDA          | GPIO1, 2.2 kΩ pullup resistor required to 3v3                                                                                    |
 | MISO              | NC                                                                                                                               |
@@ -51,7 +51,7 @@ So, you can use the [IDF Component Manager](https://docs.espressif.com/projects/
 To add this component to your project, run:
 
 ```log
-idf.py add-dependency "rjrp44/vl53l8cx^1.1.0" 
+idf.py add-dependency "rjrp44/vl53l8cx^1.2.1" 
 ```
 
 
@@ -72,7 +72,7 @@ Run `idf.py menuconfig`. Go to Component Config -> ESP System settings and incre
 
 ## 📝 License
 
-Copyright © 2023 [RJRP](https://www.github.com/RJRP44).
+Copyright © 2024 [RJRP](https://www.github.com/RJRP44).
 
 This project is [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause/)  licensed.
 
