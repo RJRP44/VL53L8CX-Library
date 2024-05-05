@@ -20,7 +20,10 @@ extern "C" {
 
 #include <stdint.h>
 #include <string.h>
-#include <driver/i2c.h>
+#include <driver/i2c_master.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <driver/gpio.h>
 
 #define ACK_CHECK_EN 0x1
 #define ACK_VAL 0x0
@@ -35,8 +38,9 @@ extern "C" {
 
 typedef struct
 {
+    i2c_master_dev_handle_t handle;
+    i2c_master_bus_config_t bus_config;
     uint16_t address;
-    i2c_port_t port;
     gpio_num_t reset_gpio;
 
 } VL53L8CX_Platform;

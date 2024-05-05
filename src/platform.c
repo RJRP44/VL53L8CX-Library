@@ -13,84 +13,47 @@
 
 #include "platform.h"
 
-uint8_t RdByte(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t *p_value) {
-    esp_err_t ret;
-    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-    i2c_master_start(cmd);
+//A buffer used to add index for the vl53l8cx data format
+uint8_t i2c_buffer[I2C_NUM_MAX][0x8002];
 
-    //St25 Read sequence :
-    i2c_master_write_byte(cmd, (p_platform->address) | I2C_MASTER_WRITE, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, RegisterAdress >> 8, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, RegisterAdress & 0xFF, ACK_CHECK_EN);
-    i2c_master_start(cmd);
-    i2c_master_write_byte(cmd, (p_platform->address) | I2C_MASTER_READ, ACK_CHECK_EN);
-    i2c_master_read_byte(cmd, p_value, NACK_VAL);
 
-    i2c_master_stop(cmd);
-    ret = i2c_master_cmd_begin(p_platform->port, cmd, 1000 / portTICK_PERIOD_MS);
-    i2c_cmd_link_delete(cmd);
+uint8_t WrMulti(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t *p_values, uint32_t size) {
 
-    return ret;
+    //Select the correct buffer
+    i2c_port_num_t i2c_port = p_platform->bus_config.i2c_port;
+
+    //Add index to the data
+    i2c_buffer[i2c_port][0] = RegisterAdress >> 8;
+    i2c_buffer[i2c_port][1] = RegisterAdress & 0xFF;
+
+    //Add the data
+    memcpy(&i2c_buffer[i2c_port][2], p_values, size);
+
+    return i2c_master_transmit(p_platform->handle, i2c_buffer[i2c_port], size + 2, -1);
 }
 
 uint8_t WrByte(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t value) {
-    esp_err_t ret;
-    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-    i2c_master_start(cmd);
 
-    //Write byte sequence :
-    i2c_master_write_byte(cmd, (p_platform->address) | I2C_MASTER_WRITE, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, RegisterAdress >> 8, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, RegisterAdress & 0xFF, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, value, ACK_CHECK_EN);
-
-    i2c_master_stop(cmd);
-    ret = i2c_master_cmd_begin(p_platform->port, cmd, 1000 / portTICK_PERIOD_MS);
-    i2c_cmd_link_delete(cmd);
-
-    //ESP_ERROR_CHECK(ret);
-    return ret;
-}
-
-uint8_t WrMulti(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t *p_values, uint32_t size) {
-    esp_err_t ret;
-    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-    i2c_master_start(cmd);
-
-    //St25 Write sequence :
-    i2c_master_write_byte(cmd, (p_platform->address) | I2C_MASTER_WRITE, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, RegisterAdress >> 8, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, RegisterAdress & 0xFF, ACK_CHECK_EN);
-    i2c_master_write(cmd, p_values, size, ACK_CHECK_EN);
-
-    i2c_master_stop(cmd);
-    ret = i2c_master_cmd_begin(p_platform->port, cmd, 1000 / portTICK_PERIOD_MS);
-    i2c_cmd_link_delete(cmd);
-
-    return ret;
+    //Write a single byte
+    return WrMulti(p_platform, RegisterAdress, &value, 1);
 }
 
 uint8_t RdMulti(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t *p_values, uint32_t size) {
-    esp_err_t ret;
-    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-    i2c_master_start(cmd);
 
-    //St25 Read sequence :
-    i2c_master_write_byte(cmd, (p_platform->address) | I2C_MASTER_WRITE, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, RegisterAdress >> 8, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, RegisterAdress & 0xFF, ACK_CHECK_EN);
-    i2c_master_start(cmd);
-    i2c_master_write_byte(cmd, (p_platform->address) | I2C_MASTER_READ, ACK_CHECK_EN);
-    if (size > 1) {
-        i2c_master_read(cmd, p_values, size - 1, ACK_VAL);
-    }
-    i2c_master_read_byte(cmd, p_values + size - 1, NACK_VAL);
+    //Select the correct buffer
+    i2c_port_num_t i2c_port = p_platform->bus_config.i2c_port;
 
-    i2c_master_stop(cmd);
-    ret = i2c_master_cmd_begin(p_platform->port, cmd, 1000 / portTICK_PERIOD_MS);
-    i2c_cmd_link_delete(cmd);
+    //Add index to the data
+    i2c_buffer[i2c_port][0] = RegisterAdress >> 8;
+    i2c_buffer[i2c_port][1] = RegisterAdress & 0xFF;
 
-    return ret;
+    return i2c_master_transmit_receive(p_platform->handle, i2c_buffer[i2c_port], 2, p_values, size, -1);
+}
+
+uint8_t RdByte(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t *p_value) {
+
+    //Read a single byte
+    return RdMulti(p_platform, RegisterAdress, p_value, 1);
 }
 
 uint8_t Reset_Sensor(VL53L8CX_Platform* p_platform)
