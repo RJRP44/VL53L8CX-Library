@@ -10,10 +10,6 @@
   ******************************************************************************
   */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifndef VL53L8CX_PLUGIN_MOTION_INDICATOR_H_
 #define VL53L8CX_PLUGIN_MOTION_INDICATOR_H_
 
@@ -98,7 +94,3 @@ uint8_t vl53l8cx_motion_indicator_set_resolution(
 		uint8_t				resolution);
 
 #endif /* VL53L8CX_PLUGIN_MOTION_INDICATOR_H_ */
-
-#ifdef __cplusplus
-}
-#endif

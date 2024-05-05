@@ -317,8 +317,6 @@ uint8_t vl53l8cx_init(
 	status |= WrByte(&(p_dev->platform), 0x7fff, 0x00);
 	status |= RdByte(&(p_dev->platform), 0x7fff, &tmp);
 	status |= WrByte(&(p_dev->platform), 0x7fff, 0x01);
-	status |= WrByte(&(p_dev->platform), 0x20, 0x07);
-	status |= WrByte(&(p_dev->platform), 0x20, 0x06);
 
 	/* Download FW into VL53L8CX */
 	status |= WrByte(&(p_dev->platform), 0x7fff, 0x09);
@@ -364,7 +362,7 @@ uint8_t vl53l8cx_init(
 			p_dev->temp_buffer, 4);
 	SwapBuffer(p_dev->temp_buffer, 4);
 	memcpy((uint8_t*)&crc_checksum, &(p_dev->temp_buffer[0]), 4);
-	if (crc_checksum != (uint32_t)0x28c6adac)
+	if (crc_checksum != (uint32_t)0x56be6b24)
 	{
 		status |= VL53L8CX_STATUS_FW_CHECKSUM_FAIL;
 	}

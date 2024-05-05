@@ -10,10 +10,6 @@
   ******************************************************************************
   */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifndef VL53L8CX_PLUGIN_XTALK_H_
 #define VL53L8CX_PLUGIN_XTALK_H_
 
@@ -393,7 +389,3 @@ static const uint8_t VL53L8CX_CALIBRATE_XTALK[] = {
 };
 
 #endif /* VL53L8CX_PLUGIN_XTALK_H_ */
-
-#ifdef __cplusplus
-}
-#endif

@@ -10,10 +10,6 @@
   ******************************************************************************
   */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifndef VL53L8CX_API_H_
 #define VL53L8CX_API_H_
 
@@ -29,7 +25,7 @@ extern "C" {
  * @brief Current driver version.
  */
 
-#define VL53L8CX_API_REVISION			"VL53L8CX_1.2.1"
+#define VL53L8CX_API_REVISION			"VL53L8CX_1.2.2"
 
 /**
  * @brief Default I2C address of VL53L8CX sensor. Can be changed using function
@@ -760,7 +756,3 @@ uint8_t vl53l8cx_dci_replace_data(
 		uint16_t			new_data_pos);
 
 #endif //VL53L8CX_API_H_
-
-#ifdef __cplusplus
-}
-#endif
