@@ -18,7 +18,7 @@ v.1.2.1. This library is just an adaptation of the ST's library for esp-32.
 * [Examples](#examples-)
 * [Usual Errors](#usual-errors-)
   * [Stack overflow error](#stack-overflow-error-)
-
+* [More parameters](#more-parameters-)
 ---
 
 ## Getting started
@@ -68,7 +68,11 @@ If by running an example you get a stack overflow error, this means that your ma
 ```
 **Increase the main stack size :**
 
-Run `idf.py menuconfig`. Go to Component Config -> ESP System settings and increase the Main task stack size to at least `7168`.
+Run `idf.py menuconfig`. Go to Component `Component config -> ESP System settings` and increase the Main task stack size to at least `7168`.
+
+
+## More parameters ⚙
+In order to get more control over your sensor configuration, run `idf.py menuconfig` and go to `Component Config -> Vl53l8cx`.
 
 ## 📝 License
 
