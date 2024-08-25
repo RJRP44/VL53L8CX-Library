@@ -1,5 +1,5 @@
-version: "1.0.2"
+version: "1.0.3"
 description: "VL53L8CX I2C and RAM optimization example"
 dependencies:
   rjrp44/vl53l8cx:
-    version : ">=2.0.*"
+    version : ">=3.0.*"

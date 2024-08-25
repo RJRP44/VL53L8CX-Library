@@ -132,7 +132,7 @@ void app_main(void)
 
     /* (Optional) Reset sensor */
     Dev.platform.reset_gpio = GPIO_NUM_5;
-    Reset_Sensor(&(Dev.platform));
+    VL53L8CX_Reset_Sensor(&(Dev.platform));
 
 
     /* (Optional) Set a new I2C address if the wanted address is different

@@ -120,7 +120,7 @@ void app_main(void)
 
     /* (Optional) Reset sensor */
     Dev.platform.reset_gpio = GPIO_NUM_5;
-    Reset_Sensor(&(Dev.platform));
+    VL53L8CX_Reset_Sensor(&(Dev.platform));
 
 
     /* (Optional) Set a new I2C address if the wanted address is different
@@ -218,7 +218,7 @@ void app_main(void)
 
         /* Wait a few ms to avoid too high polling (function in platform
          * file, not in API) */
-        WaitMs(&(Dev.platform), 5);
+        VL53L8CX_WaitMs(&(Dev.platform), 5);
     }
 
     status = vl53l8cx_stop_ranging(&Dev);

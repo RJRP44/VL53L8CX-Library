@@ -121,7 +121,7 @@ void app_main(void)
 
     /* (Optional) Reset sensor */
     Dev.platform.reset_gpio = GPIO_NUM_5;
-    Reset_Sensor(&(Dev.platform));
+    VL53L8CX_Reset_Sensor(&(Dev.platform));
 
     /* (Optional) Set a new I2C address if the wanted address is different
     * from the default one (filled with 0x20 for this example).
@@ -169,7 +169,7 @@ void app_main(void)
 
     /* We wait 5 seconds, only for the example */
     printf("Waiting 5 seconds for the example...\n");
-    WaitMs(&(Dev.platform), 5000);
+    VL53L8CX_WaitMs(&(Dev.platform), 5000);
 
     /* After 5 seconds, the sensor needs to be restarted */
     status = vl53l8cx_set_power_mode(&Dev, VL53L8CX_POWER_MODE_WAKEUP);

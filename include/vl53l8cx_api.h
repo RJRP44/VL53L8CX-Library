@@ -29,7 +29,7 @@ extern "C" {
  * @brief Current driver version.
  */
 
-#define VL53L8CX_API_REVISION			"VL53L8CX_1.2.2"
+#define VL53L8CX_API_REVISION			"VL53L8CX_2.0.0"
 
 /**
  * @brief Default I2C address of VL53L8CX sensor. Can be changed using function

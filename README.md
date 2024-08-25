@@ -1,11 +1,11 @@
 # VL53L8CX library for ESP32
 
 [![Component Registry](https://components.espressif.com/components/rjrp44/vl53l8cx/badge.svg)](https://components.espressif.com/components/rjrp44/vl53l8cx)
-[![Uld Version](https://img.shields.io/badge/uld_version-1.2.2-white)](https://www.st.com/content/st_com/en/products/embedded-software/imaging-software/stsw-img040.html)
+[![Uld Version](https://img.shields.io/badge/uld_version-2.0.0-white)](https://www.st.com/content/st_com/en/products/embedded-software/imaging-software/stsw-img040.html)
 
 A vl53l5cx library for esp32 using the **esp-idf framework**. This library is based
 on [ST's  Ultra Lite Driver (ULD) for VL53L8CX](https://www.st.com/content/st_com/en/products/embedded-software/imaging-software/stsw-img040.html)
-v.1.2.2. This library is just an adaptation of the ST's library for esp-32.
+v.2.0.0. This library is just an adaptation of the ST's library for esp-32.
 
 > **Warning**
 > This Library is **not** compatible with Arduino framework
