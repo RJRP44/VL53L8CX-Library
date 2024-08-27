@@ -74,6 +74,7 @@ Run `idf.py menuconfig`. Go to Component `Component config -> ESP System setting
 ## More parameters ⚙
 In order to get more control over your sensor configuration, run `idf.py menuconfig` and go to `Component Config -> Vl53l8cx`.
 
+In those settings you can change the number of target per zone, the timeout value, and you can disable selected output, in order to reduce I2C access.
 ## 📝 License
 
 Copyright © 2024 [RJRP](https://www.github.com/RJRP44).

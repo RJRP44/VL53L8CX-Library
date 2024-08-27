@@ -13,6 +13,21 @@
 
 #include "platform.h"
 
+//Use the timeout from the config, the default timeout is -1
+#if CONFIG_VL53L8CX_I2C_TIMEOUT == false
+#define VL53L8CX_I2C_TIMEOUT (-1)
+#else
+#define VL53L8CX_I2C_TIMEOUT CONFIG_VL53L8CX_I2C_TIMEOUT_VALUE
+#endif
+
+//Define the reset scheme
+#ifdef CONFIG_VL53L8CX_RESET_PIN_HIGH
+#define VL53L8CX_RESET_LEVEL 1
+#elif CONFIG_VL53L8CX_RESET_PIN_LOW
+#define VL53L8CX_RESET_LEVEL 0
+#endif
+
+
 //A buffer used to add index for the vl53l8cx data format
 uint8_t i2c_buffer[I2C_NUM_MAX][0x8002];
 
@@ -29,7 +44,7 @@ uint8_t VL53L8CX_WrMulti(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress,
     //Add the data
     memcpy(&i2c_buffer[i2c_port][2], p_values, size);
 
-    return i2c_master_transmit(p_platform->handle, i2c_buffer[i2c_port], size + 2, -1);
+    return i2c_master_transmit(p_platform->handle, i2c_buffer[i2c_port], size + 2, VL53L8CX_I2C_TIMEOUT);
 }
 
 uint8_t VL53L8CX_WrByte(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t value) {
@@ -47,7 +62,7 @@ uint8_t VL53L8CX_RdMulti(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress,
     i2c_buffer[i2c_port][0] = RegisterAdress >> 8;
     i2c_buffer[i2c_port][1] = RegisterAdress & 0xFF;
 
-    return i2c_master_transmit_receive(p_platform->handle, i2c_buffer[i2c_port], 2, p_values, size, -1);
+    return i2c_master_transmit_receive(p_platform->handle, i2c_buffer[i2c_port], 2, p_values, size, VL53L8CX_I2C_TIMEOUT);
 }
 
 uint8_t VL53L8CX_RdByte(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t *p_value) {
@@ -60,10 +75,10 @@ uint8_t VL53L8CX_Reset_Sensor(VL53L8CX_Platform* p_platform)
 {
     gpio_set_direction(p_platform->reset_gpio, GPIO_MODE_OUTPUT);
 
-    gpio_set_level(p_platform->reset_gpio, 0);
+    gpio_set_level(p_platform->reset_gpio, VL53L8CX_RESET_LEVEL);
     VL53L8CX_WaitMs(p_platform, 100);
 
-    gpio_set_level(p_platform->reset_gpio, 1);
+    gpio_set_level(p_platform->reset_gpio, !VL53L8CX_RESET_LEVEL);
     VL53L8CX_WaitMs(p_platform, 100);
 
     return ESP_OK;

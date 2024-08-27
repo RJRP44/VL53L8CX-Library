@@ -9,6 +9,7 @@ menu "Vl53l8cx"
             The user can configure the number of targets returned by the sensor.
             The minimum distance between two targets to be detected is 600 mm.
             A lower number of target per zone means a lower RAM
+
     config VL53L8CX_DISABLE_AMBIENT_PER_SPAD
         bool "Disable ambient per SPAD result"
         default n
@@ -17,6 +18,7 @@ menu "Vl53l8cx"
             Consequently, the field is not declared in the results structure, 
             and the data is not transferred to the host. 
             The RAM size and I2C/SPI size are reduced.
+
     config VL53L8CX_DISABLE_NB_SPADS_ENABLED
         bool "Disable number of SPADs enabled result"
         default n
@@ -25,6 +27,7 @@ menu "Vl53l8cx"
             Consequently, the field is not declared in the results structure, 
             and the data is not transferred to the host. 
             The RAM size and I2C/SPI size are reduced.
+
     config VL53L8CX_DISABLE_NB_TARGET_DETECTED
         bool "Disable number of target detected result"
         default n
@@ -33,6 +36,7 @@ menu "Vl53l8cx"
             Consequently, the field is not declared in the results structure, 
             and the data is not transferred to the host. 
             The RAM size and I2C/SPI size are reduced.
+
     config VL53L8CX_DISABLE_SIGNAL_PER_SPAD
         bool "Disable signal per SPAD result"
         default n
@@ -41,6 +45,7 @@ menu "Vl53l8cx"
             Consequently, the field is not declared in the results structure, 
             and the data is not transferred to the host. 
             The RAM size and I2C/SPI size are reduced.
+
     config VL53L8CX_DISABLE_RANGE_SIGMA_MM
         bool "Disable range sigma in mm result"
         default n
@@ -49,6 +54,7 @@ menu "Vl53l8cx"
             Consequently, the field is not declared in the results structure, 
             and the data is not transferred to the host. 
             The RAM size and I2C/SPI size are reduced.
+
     config VL53L8CX_DISABLE_DISTANCE_MM
         bool "Disable distance in mm result"
         default n
@@ -57,6 +63,7 @@ menu "Vl53l8cx"
             Consequently, the field is not declared in the results structure, 
             and the data is not transferred to the host. 
             The RAM size and I2C/SPI size are reduced.
+
     config VL53L8CX_DISABLE_REFLECTANCE_PERCENT
         bool "Disable reflectance in percent result"
         default n
@@ -65,6 +72,7 @@ menu "Vl53l8cx"
             Consequently, the field is not declared in the results structure, 
             and the data is not transferred to the host. 
             The RAM size and I2C/SPI size are reduced.
+
     config VL53L8CX_DISABLE_TARGET_STATUS
         bool "Disable target status result"
         default n
@@ -73,6 +81,7 @@ menu "Vl53l8cx"
             Consequently, the field is not declared in the results structure, 
             and the data is not transferred to the host. 
             The RAM size and I2C/SPI size are reduced.
+
     config VL53L8CX_DISABLE_MOTION_INDICATOR
         bool "Disable motion indicator result"
         default n
@@ -81,4 +90,28 @@ menu "Vl53l8cx"
             Consequently, the field is not declared in the results structure, 
             and the data is not transferred to the host. 
             The RAM size and I2C/SPI size are reduced.
+
+    config VL53L8CX_I2C_TIMEOUT
+        bool "Enable I²C bus timeout"
+        default false
+
+    config VL53L8CX_I2C_TIMEOUT_VALUE
+        int "I²C bus timeout"
+        depends on VL53L8CX_I2C_TIMEOUT
+        default 1000
+
+        choice VL53L8CX_RESET_LEVEL
+                    prompt "Reset Pin State"
+                    default VL53L8CX_RESET_PIN_LOW
+                    help
+                        The user can choose if during the reset scheme the reset pin is low or high.
+                        This allow different circuits and the user can choose accordingly to his needs.
+
+                    config VL53L8CX_RESET_PIN_LOW
+                        bool "Low"
+                    config VL53L8CX_RESET_PIN_HIGH
+                        bool "High"
+
+        endchoice
+
 endmenu
