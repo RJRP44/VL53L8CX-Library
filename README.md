@@ -13,8 +13,9 @@ v.2.0.0. This library is just an adaptation of the ST's library for esp-32.
 ## Contents 📌
 
 * [Getting started](#Getting-started)
-  * [Wiring for the SATEL-VL53L8](#wiring-for-the-satel-VL53L8)
+  * [Requirements](#requirements)
   * [Library Installation](#library-installation-)
+  * [Wiring for the SATEL-VL53L8](#wiring-for-the-satel-VL53L8)
 * [Examples](#examples-)
 * [Usual Errors](#usual-errors-)
   * [Stack overflow error](#stack-overflow-error-)
@@ -22,6 +23,22 @@ v.2.0.0. This library is just an adaptation of the ST's library for esp-32.
 ---
 
 ## Getting started
+
+### Requirements
+
+This version of the library uses the latest beta of the esp-idf ([v5.4-beta1](https://github.com/espressif/esp-idf/releases/tag/v5.4-beta1)) for performance improvements.
+
+### Library Installation 📥
+
+The stable version of this library is available at https://components.espressif.com/components/rjrp44/vl53l8cx.
+
+So, you can use the [IDF Component Manager](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/tools/idf-component-manager.html) to easily import this library into your project.
+To add this component to your project, run:
+
+```log
+idf.py add-dependency "rjrp44/vl53l8cx^2.0.1" 
+```
+
 ### Wiring for the SATEL-VL53L8
 
 For the examples this is the used wiring, but feel free to modify it and adapt it for your needs.
@@ -41,19 +58,6 @@ For the examples this is the used wiring, but feel free to modify it and adapt i
 | GPIO1             | NC                                                                                                                               |
 | GPIO2             | NC                                                                                                                               |
 | GND               | GND                                                                                                                              |
-
-
-### Library Installation 📥
-
-The library is available at https://components.espressif.com/components/rjrp44/vl53l8cx.
-
-So, you can use the [IDF Component Manager](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/tools/idf-component-manager.html) to easily import this library into your project.
-To add this component to your project, run:
-
-```log
-idf.py add-dependency "rjrp44/vl53l8cx^2.0.0" 
-```
-
 
 ## Examples 📄
 

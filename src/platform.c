@@ -27,24 +27,23 @@
 #define VL53L8CX_RESET_LEVEL 0
 #endif
 
-
-//A buffer used to add index for the vl53l8cx data format
-uint8_t i2c_buffer[I2C_NUM_MAX][0x8002];
-
-
 uint8_t VL53L8CX_WrMulti(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t *p_values, uint32_t size) {
 
     //Select the correct buffer
-    i2c_port_num_t i2c_port = p_platform->bus_config.i2c_port;
+    i2c_master_transmit_multi_buffer_info_t i2c_buffers[2];
 
-    //Add index to the data
-    i2c_buffer[i2c_port][0] = RegisterAdress >> 8;
-    i2c_buffer[i2c_port][1] = RegisterAdress & 0xFF;
+    //Convert the uint16 address to an array of uint8
+    uint8_t i2c_address[] = {RegisterAdress >> 8, RegisterAdress & 0xFF};
 
-    //Add the data
-    memcpy(&i2c_buffer[i2c_port][2], p_values, size);
+    //Add the address first to the data format
+    i2c_buffers[0].write_buffer = i2c_address;
+    i2c_buffers[0].buffer_size = 2;
 
-    return i2c_master_transmit(p_platform->handle, i2c_buffer[i2c_port], size + 2, VL53L8CX_I2C_TIMEOUT);
+    //Add the content to the data format
+    i2c_buffers[1].write_buffer = p_values;
+    i2c_buffers[1].buffer_size = size;
+
+    return i2c_master_multi_buffer_transmit(p_platform->handle, i2c_buffers, 2, VL53L8CX_I2C_TIMEOUT);
 }
 
 uint8_t VL53L8CX_WrByte(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t value) {
@@ -55,14 +54,10 @@ uint8_t VL53L8CX_WrByte(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, 
 
 uint8_t VL53L8CX_RdMulti(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t *p_values, uint32_t size) {
 
-    //Select the correct buffer
-    i2c_port_num_t i2c_port = p_platform->bus_config.i2c_port;
-
     //Add index to the data
-    i2c_buffer[i2c_port][0] = RegisterAdress >> 8;
-    i2c_buffer[i2c_port][1] = RegisterAdress & 0xFF;
+    uint8_t i2c_address[] = {RegisterAdress >> 8, RegisterAdress & 0xFF};
 
-    return i2c_master_transmit_receive(p_platform->handle, i2c_buffer[i2c_port], 2, p_values, size, VL53L8CX_I2C_TIMEOUT);
+    return i2c_master_transmit_receive(p_platform->handle, i2c_address, 2, p_values, size, VL53L8CX_I2C_TIMEOUT);
 }
 
 uint8_t VL53L8CX_RdByte(VL53L8CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t *p_value) {
