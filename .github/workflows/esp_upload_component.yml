@@ -10,6 +10,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: vl53l8cx
       - uses: espressif/upload-components-ci-action@v2
         with:
           components: "vl53l8cx"
