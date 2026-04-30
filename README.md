@@ -26,7 +26,7 @@ v.2.0.0. This library is just an adaptation of the ST's library for esp-32.
 
 ### Requirements
 
-This version of the library uses the latest beta of the esp-idf ([v5.4-beta1](https://github.com/espressif/esp-idf/releases/tag/v5.4-beta1)) for performance improvements.
+This version of the library uses the esp-idf v6 for performance improvements.
 
 ### Library Installation 📥
 
@@ -36,7 +36,7 @@ So, you can use the [IDF Component Manager](https://docs.espressif.com/projects/
 To add this component to your project, run:
 
 ```log
-idf.py add-dependency "rjrp44/vl53l8cx^2.0.1" 
+idf.py add-dependency "rjrp44/vl53l8cx" 
 ```
 
 ### Wiring for the SATEL-VL53L8
@@ -81,7 +81,7 @@ In order to get more control over your sensor configuration, run `idf.py menucon
 In those settings you can change the number of target per zone, the timeout value, and you can disable selected output, in order to reduce I2C access.
 ## 📝 License
 
-Copyright © 2024 [RJRP](https://www.github.com/RJRP44).
+Copyright © 2026 [RJRP](https://www.github.com/RJRP44).
 
 This project is [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause/)  licensed.
 
